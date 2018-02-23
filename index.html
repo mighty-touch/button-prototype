@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <title>Vue</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ msg }}</h1>
+    <br> Window width: {{ windowWidth }}
+    <br> Window height: {{ windowHeight }}
+    <br>
+    <br>
+    <button @click="random" v-bind:style="styleObject"> button</button>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Hello World! This is a Event listener test.',
+        windowWidth: 0,
+        windowHeight: 0,
+        styleObject: {
+          position: 'absolute',
+          top: '0px',
+          left: '0px',
+        }
+      },
+
+      mounted() {
+        this.$nextTick(function () {
+          window.addEventListener('resize', this.getWindowWidth);
+          window.addEventListener('resize', this.getWindowHeight);
+
+          //Init
+          this.getWindowWidth()
+          this.getWindowHeight()
+        })
+
+      },
+
+      methods: {
+        random() {
+          this.styleObject.top = (Math.random() * this.windowWidth) + "px"
+          this.styleObject.left = (Math.random() * this.windowHeight) + "px"
+        },
+        getWindowWidth(event) {
+          this.windowWidth = document.documentElement.clientWidth;
+        },
+
+        getWindowHeight(event) {
+          this.windowHeight = document.documentElement.clientHeight;
+        }
+      },
+
+      beforeDestroy() {
+        window.removeEventListener('resize', this.getWindowWidth);
+        window.removeEventListener('resize', this.getWindowHeight);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
