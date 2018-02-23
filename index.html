@@ -17,9 +17,9 @@
     <br> Window height: {{ windowHeight }}
     <br>
     <br>
-    <button @click="random(1)" v-bind:style="styleObject" id="haha">button1</button>
+    <button @click="random(1)" v-bind:style="styleObject" id="haha">Button 1</button>
     <br>
-    <button @click="random(2)" v-bind:style="styleObject2" id="hehe">button2</button>
+    <button @click="random(2)" v-bind:style="styleObject2" id="hehe">Button 2</button>
   </div>
 
   <script>
@@ -33,12 +33,31 @@
           position: 'absolute',
           top: '0px',
           left: '0px',
+          'background-color': '#4CAF50',
+          'border': 'none',
+          'color': 'white',
+          'padding': '15px 32px',
+          'text-align': 'center',
+          'text-decoration': 'none',
+          'display': 'inline-block',
+          'font-size': '16px',
+          'margin': '4px 2px',
+          'cursor': 'pointer',
         },
         styleObject2: {
           position: 'absolute',
           top: '0px',
-          left: '100px',
-          size:'100px'
+          left: '200px',
+          'background-color': '#008CBA',
+          'border': 'none',
+          'color': 'white',
+          'padding': '15px 32px',
+          'text-align': 'center',
+          'text-decoration': 'none',
+          'display': 'inline-block',
+          'font-size': '16px',
+          'margin': '4px 2px',
+          'cursor': 'pointer',
         },
         button: {
           height: '0px',
@@ -64,14 +83,19 @@
           const randomH = Math.random()
           const randomW = Math.random()
           const topPos = Math.abs(randomH * this.windowHeight - this.button.height)
-          const leftPos = Math.abs(randomW * this.windowWidth -  this.button.width)
+          const leftPos = Math.abs(randomW * this.windowWidth - this.button.width)
           if (param === 1) {
             this.styleObject.top = topPos + "px"
             this.styleObject.left = leftPos + "px"
+            this.styleObject['background-color'] = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
+            document.getElementById("hehe").style.backgroundColor = this.styleObject2['background-color']
+
           } else {
             this.styleObject2.top = topPos + "px"
             this.styleObject2.left = leftPos + "px"
-          }         
+            this.styleObject2['background-color'] = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
+            document.getElementById("hehe").style.backgroundColor = this.styleObject2['background-color']
+          }
         },
 
         getWindowWidth(event) {
