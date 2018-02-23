@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,9 @@
     <br> Window height: {{ windowHeight }}
     <br>
     <br>
-    <button @click="random" v-bind:style="styleObject"> button</button>
+    <button @click="random(1)" v-bind:style="styleObject" id="haha">button1</button>
+    <br>
+    <button @click="random(2)" v-bind:style="styleObject2" id="hehe">button2</button>
   </div>
 
   <script>
@@ -30,7 +33,17 @@
           position: 'absolute',
           top: '0px',
           left: '0px',
-        }
+        },
+        styleObject2: {
+          position: 'absolute',
+          top: '0px',
+          left: '100px',
+          size:'100px'
+        },
+        button: {
+          height: '0px',
+          width: '0px',
+        },
       },
 
       mounted() {
@@ -41,21 +54,40 @@
           //Init
           this.getWindowWidth()
           this.getWindowHeight()
+          this.getButtonSizeHaha()
+          this.getButtonSizeHehe()
         })
-
       },
 
       methods: {
-        random() {
-          this.styleObject.top = (Math.random() * this.windowWidth) + "px"
-          this.styleObject.left = (Math.random() * this.windowHeight) + "px"
+        random(param) {
+          const randomH = Math.random()
+          const randomW = Math.random()
+          const topPos = Math.abs(randomH * this.windowHeight - this.button.height)
+          const leftPos = Math.abs(randomW * this.windowWidth -  this.button.width)
+          if (param === 1) {
+            this.styleObject.top = topPos + "px"
+            this.styleObject.left = leftPos + "px"
+          } else {
+            this.styleObject2.top = topPos + "px"
+            this.styleObject2.left = leftPos + "px"
+          }         
         },
+
         getWindowWidth(event) {
           this.windowWidth = document.documentElement.clientWidth;
         },
-
         getWindowHeight(event) {
           this.windowHeight = document.documentElement.clientHeight;
+        },
+
+        getButtonSizeHaha() {
+          this.button.height = document.getElementById('haha').offsetHeight
+          this.button.width = document.getElementById('haha').offsetWidth
+        },
+        getButtonSizeHehe() {
+          this.button.height = document.getElementById('hehe').offsetHeight
+          this.button.width = document.getElementById('hehe').offsetWidth
         }
       },
 
